@@ -107,7 +107,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="TUV-nI-hw0" kind="show" id="rQw-6e-AxQ"/>
+                        <segue destination="TUV-nI-hw0" kind="show" identifier="goToItems" id="rQw-6e-AxQ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T4Y-rz-r3P" userLabel="First Responder" sceneMemberID="firstResponder"/>
