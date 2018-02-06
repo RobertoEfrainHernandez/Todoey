@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class ToDoListViewController: UITableViewController  {
+class ToDoListViewController: SwipeTableViewController  {
     
     var todoItems : Results<Item>?
     let realm = try! Realm()
@@ -25,8 +25,8 @@ class ToDoListViewController: UITableViewController  {
         // Do any additional setup after loading the view, typically from a nib.
         
     
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-        
+        //print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        tableView.rowHeight = 80.0
     }
 
     // Mark: -- Table View Data Source
@@ -35,8 +35,7 @@ class ToDoListViewController: UITableViewController  {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if let item = todoItems?[indexPath.row] {
              cell.textLabel?.text = item.title
@@ -111,6 +110,18 @@ class ToDoListViewController: UITableViewController  {
         tableView.reloadData()
     }
     
+    // Mark: -- Delete Data from Swipe
+    override func updateModel(at indexPath: IndexPath) {
+        if let itemsForDeletion = self.todoItems?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(itemsForDeletion)
+                }
+            } catch {
+                print("Error Deleting items \(error)")
+            }
+        }
+    }
 
 }
 
